@@ -1,0 +1,313 @@
+:root {
+  --bg: #0f0f10;
+  --bg-card: #1a1a1e;
+  --bg-card-hover: #1f1f24;
+  --border: #2a2a30;
+  --text: #e4e4e7;
+  --text-secondary: #71717a;
+  --accent: #6366f1;
+  --accent-dim: rgba(99, 102, 241, 0.15);
+  --green: #22c55e;
+  --yellow: #eab308;
+  --red: #ef4444;
+  --bar-bg: #27272a;
+  --radius: 8px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  line-height: 1.5;
+  overflow-x: hidden;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+#app {
+  padding: 16px;
+  max-width: 100%;
+}
+
+header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+
+header h1 {
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.header-meta {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-left: 4px;
+  flex: 1;
+}
+
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.15s;
+}
+
+.icon-btn:hover {
+  background: var(--bg-card);
+  color: var(--text);
+  border-color: var(--text-secondary);
+}
+
+/* GPU Cards */
+.gpu-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  margin-bottom: 10px;
+  transition: background 0.15s;
+}
+
+.gpu-card:hover {
+  background: var(--bg-card-hover);
+}
+
+.gpu-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.gpu-name {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+.gpu-index {
+  font-size: 11px;
+  color: var(--text-secondary);
+  background: var(--accent-dim);
+  color: var(--accent);
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.metric {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.metric-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+.metric-bar {
+  height: 4px;
+  background: var(--bar-bg);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.metric-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.bar-green { background: var(--green); }
+.bar-yellow { background: var(--yellow); }
+.bar-red { background: var(--red); }
+.bar-accent { background: var(--accent); }
+
+.metric-detail {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+
+/* Processes */
+.processes {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--border);
+}
+
+.processes-header {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.process-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.process-name {
+  color: var(--text);
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 11px;
+}
+
+.process-mem {
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+  font-size: 11px;
+}
+
+/* Settings */
+#settings-panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+#settings-panel h2 {
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.setting-group {
+  margin-bottom: 14px;
+}
+
+.setting-group > label {
+  display: block;
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.checkbox-group label {
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}
+
+/* Button group (replaces select dropdowns to avoid focus-loss) */
+.btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.btn-option {
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 5px 12px;
+  font-size: 11px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border-radius: 6px;
+}
+
+.btn-option:hover {
+  background: var(--bg-card-hover);
+  color: var(--text);
+  border-color: var(--text-secondary);
+}
+
+.btn-option.active {
+  background: var(--accent-dim);
+  color: var(--accent);
+  border-color: var(--accent);
+  font-weight: 500;
+}
+
+.btn-save {
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  width: 100%;
+  transition: opacity 0.15s;
+}
+
+.btn-save:hover {
+  opacity: 0.9;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-secondary);
+}
