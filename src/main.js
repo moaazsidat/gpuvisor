@@ -197,6 +197,21 @@ document.addEventListener('click', (e) => {
   }
 });
 
+// Pin mode: keep the panel open when it loses focus
+function applyPinned(pinned) {
+  const btn = document.getElementById('pin-toggle');
+  btn.classList.toggle('active', pinned);
+  btn.title = pinned ? 'Unpin' : 'Pin (keep open)';
+}
+
+document.getElementById('pin-toggle').addEventListener('click', async () => {
+  const pinned = !document.getElementById('pin-toggle').classList.contains('active');
+  await invoke('set_pinned', { pinned });
+  applyPinned(pinned);
+});
+
+invoke('get_pinned').then(applyPinned).catch(() => {});
+
 // Event listeners
 document.getElementById('settings-toggle').addEventListener('click', () => {
   showSettings = !showSettings;

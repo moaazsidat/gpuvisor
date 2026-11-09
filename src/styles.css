@@ -77,6 +77,17 @@ header h1 {
   border-color: var(--text-secondary);
 }
 
+.icon-btn.active {
+  background: var(--bg-card);
+  color: var(--text);
+  border-color: var(--text);
+}
+
+header h1,
+.header-meta {
+  pointer-events: none;
+}
+
 /* GPU Cards */
 .gpu-card {
   background: var(--bg-card);

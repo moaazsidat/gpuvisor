@@ -4,7 +4,10 @@ mod tray;
 
 use gpu::GpuMonitor;
 use settings::Settings;
-use std::sync::{Arc, Mutex};
+use std::sync::{
+    atomic::{AtomicBool, Ordering},
+    Arc, Mutex,
+};
 use tauri::{
     image::Image,
     menu::{MenuBuilder, MenuItem, MenuItemBuilder, PredefinedMenuItem},
@@ -28,8 +31,19 @@ fn save_settings(
     Ok(())
 }
 
+#[tauri::command]
+fn set_pinned(pinned: bool, state: tauri::State<'_, AppState>) {
+    state.pinned.store(pinned, Ordering::Relaxed);
+}
+
+#[tauri::command]
+fn get_pinned(state: tauri::State<'_, AppState>) -> bool {
+    state.pinned.load(Ordering::Relaxed)
+}
+
 struct AppState {
     settings: Mutex<Settings>,
+    pinned: AtomicBool,
     stats_item: MenuItem<tauri::Wry>,
 }
 
@@ -58,6 +72,7 @@ pub fn run() {
 
             app.manage(AppState {
                 settings: Mutex::new(settings.clone()),
+                pinned: AtomicBool::new(false),
                 stats_item,
             });
 
@@ -109,7 +124,7 @@ pub fn run() {
 
             Ok(())
         })
-        .invoke_handler(tauri::generate_handler![get_settings, save_settings])
+        .invoke_handler(tauri::generate_handler![get_settings, save_settings, set_pinned, get_pinned])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
@@ -142,9 +157,13 @@ fn toggle_panel(app_handle: &tauri::AppHandle) {
             window.show().ok();
 
             let win = window.clone();
+            let handle = app_handle.clone();
             window.on_window_event(move |event| {
                 if let tauri::WindowEvent::Focused(false) = event {
-                    win.hide().ok();
+                    let pinned = handle.state::<AppState>().pinned.load(Ordering::Relaxed);
+                    if !pinned {
+                        win.hide().ok();
+                    }
                 }
             });
 
